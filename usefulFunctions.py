@@ -3,6 +3,8 @@
 import os
 import fnmatch
 import matplotlib.pyplot as plt
+import sys
+import numpy as np
 
 def get_files(directory, search):
     file_list = []
@@ -22,3 +24,19 @@ def save_matplotlib_figure(directory, figure, file_format, name):
     plt.figure(figure.number)
     plt.savefig(directory + '/' + name + '.' + file_format)
     return
+
+def is_arg_present(all_args, arg):
+    return sum(all_args == arg)
+
+def get_arg(all_args, arg):
+    arg_position = np.where(all_args==arg)[0][0]
+    out = all_args[arg_position+1]
+    if str.isnumeric(out):
+        out = float(out)
+        if out.is_integer:
+            out = int(out)
+    elif str.lower(out) == 'true':
+        out = True
+    elif str.lower(out) == 'false':
+        out = False
+    return out
